@@ -1,0 +1,51 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Policy {
+  coverageAmount   Float?
+  createdAt        DateTime  @default(now())
+  endDate          DateTime?
+  id               String    @id @default(cuid())
+  policyHolderName String?
+  policyNumber     String?
+  startDate        DateTime?
+  updatedAt        DateTime  @updatedAt
+}
+
+model InsuranceClaim {
+  claimAmount  Float?
+  claimDate    DateTime?
+  createdAt    DateTime                  @default(now())
+  id           String                    @id @default(cuid())
+  policyNumber String?
+  status       EnumInsuranceClaimStatus?
+  updatedAt    DateTime                  @updatedAt
+}
+
+model ClaimStatus {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(cuid())
+  name        String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Claimant {
+  address   String?
+  createdAt DateTime @default(now())
+  email     String?
+  fullName  String?
+  id        String   @id @default(cuid())
+  phone     String?
+  updatedAt DateTime @updatedAt
+}
+
+enum EnumInsuranceClaimStatus {
+  Option1
+}
